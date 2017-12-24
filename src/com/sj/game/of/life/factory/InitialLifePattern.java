@@ -67,6 +67,8 @@ public class InitialLifePattern {
 				if (rowIndex == columnIndex || (rowIndex + columnIndex) == 9
 						|| (rowIndex - 1 < 0 || columnIndex - 1 < 0 || rowIndex + 1 > 9 || columnIndex + 1 > 9)) {
 					crossInABoxPattern[rowIndex][columnIndex] = new Cell(true, rowIndex, columnIndex);
+				} else {
+					crossInABoxPattern[rowIndex][columnIndex] = new Cell(false, rowIndex, columnIndex);
 				}
 			}
 		}

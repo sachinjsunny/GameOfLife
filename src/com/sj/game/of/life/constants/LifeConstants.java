@@ -1,4 +1,4 @@
-package constants;
+package com.sj.game.of.life.constants;
 
 public class LifeConstants {
 	public static final String BOX = "BOX";

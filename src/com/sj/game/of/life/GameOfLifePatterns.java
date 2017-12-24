@@ -1,7 +1,7 @@
 package com.sj.game.of.life;
 
 import static com.sj.game.of.life.factory.InitialLifePattern.getMatrix;
-import static constants.LifeConstants.CROSS;
+import static constants.LifeConstants.CROSS_IN_A_BOX;
 import static constants.LifeConstants.MATRIX_LENGTH;
 
 import org.apache.log4j.Logger;
@@ -18,43 +18,30 @@ public class GameOfLifePatterns {
 
 	private static Cell[][] theMatrix;
 
-	private static Cell[][] theMatrixReturns;
-
 	public static void main(String[] args) {
-		theMatrix = getMatrix(CROSS);
-		theMatrixReturns = getMatrix(CROSS);
-		for (int i = 0; i < 10; i++) {
-			printLifeArray();
+		theMatrix = getMatrix(CROSS_IN_A_BOX);
+		for (int i = 0; i < MATRIX_LENGTH; i++) {
+			printTheMatrix();
 			runGameOfLifeRules();
 			log.info("============================================================\n");
-			replaceOldPattern();
-		}
-	}
-
-	private static void replaceOldPattern() {
-		for (int i = 0; i < MATRIX_LENGTH; i++) {
-			for (int j = 0; j < MATRIX_LENGTH; j++) {
-				theMatrixReturns[i][j] = theMatrix[i][j];
-			}
 		}
 	}
 
 	private static void runGameOfLifeRules() {
-		for (int i = 0; i < MATRIX_LENGTH; i++) {
-			for (int j = 0; j < MATRIX_LENGTH; j++) {
-				Cell currentCell = theMatrix[i][j];
-				currentCell.setAlive(currentCell.willIContinueToLive(theMatrix));
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				theMatrix[rowIndex][columnIndex].willIContinueToLiveInTheMatrix(theMatrix);
 			}
 		}
 	}
 
-	private static void printLifeArray() {
-		for (int i = 0; i < MATRIX_LENGTH; i++) {
-			for (int j = 0; j < theMatrix[i].length; j++) {
-				if (j > 0) {
+	private static void printTheMatrix() {
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				if (columnIndex > 0) {
 					log.info(",");
 				}
-				log.info(theMatrix[i][j].isAlive());
+				log.info(theMatrix[rowIndex][columnIndex].isAlive());
 			}
 			log.info("\n");
 		}

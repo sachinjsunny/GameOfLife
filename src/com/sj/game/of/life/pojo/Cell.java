@@ -93,17 +93,17 @@ public class Cell {
 		return numberOfAliveCellsAroundMe;
 	}
 
-	public boolean willIContinueToLive(Cell[][] theMatrix) {
+	public void willIContinueToLiveInTheMatrix(Cell[][] theMatrix) {
 		int numberOfAliveCellsAroundMe = this.countLiveCellsAroundMe(theMatrix);
 		if (numberOfAliveCellsAroundMe > 8) {
 			log.debug(this.getRowIndex() + "," + this.getColumnIndex());
 		}
 		if (this.isAlive() && (numberOfAliveCellsAroundMe == 2 || numberOfAliveCellsAroundMe == 3)) {
-			return true;
+			this.alive = true;
 		} else if (this.isAlive() && (numberOfAliveCellsAroundMe < 2 || numberOfAliveCellsAroundMe > 3)) {
-			return false;
+			this.alive = false;
 		} else {
-			return !this.isAlive() && numberOfAliveCellsAroundMe == 3;
+			this.alive = !this.isAlive() && numberOfAliveCellsAroundMe == 3;
 		}
 	}
 }
