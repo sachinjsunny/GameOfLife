@@ -1,64 +1,87 @@
 package com.sj.game.of.life.factory;
 
-import static constants.LifeConstants.allFilled;
-import static constants.LifeConstants.box;
-import static constants.LifeConstants.cross;
-import static constants.LifeConstants.matrixLength;
-import static constants.LifeConstants.star;
+import static constants.LifeConstants.ALL_FILLED;
+import static constants.LifeConstants.BOX;
+import static constants.LifeConstants.CROSS;
+import static constants.LifeConstants.MATRIX_LENGTH;
+import static constants.LifeConstants.CROSS_IN_A_BOX;
 
+import com.sj.game.of.life.pojo.Cell;
+
+/**
+ * @author sachinjsunny
+ *
+ */
 public class InitialLifePattern {
 
-	private static boolean[][] createAllFilledPattern() {
-		boolean[][] allFilled = new boolean[matrixLength][matrixLength];
+	private InitialLifePattern() {
 
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < matrixLength; j++) {
-				allFilled[i][j] = true;
+	}
+
+	private static Cell[][] createAllFilledPattern() {
+		Cell[][] allFilled = new Cell[MATRIX_LENGTH][MATRIX_LENGTH];
+
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				allFilled[rowIndex][columnIndex] = new Cell(true, rowIndex, columnIndex);
 			}
 		}
 		return allFilled;
 	}
 
-	private static boolean[][] createBoxPattern() {
-		boolean[][] box = new boolean[matrixLength][matrixLength];
+	private static Cell[][] createBoxPattern() {
+		Cell[][] box = new Cell[MATRIX_LENGTH][MATRIX_LENGTH];
 
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < matrixLength; j++) {
-				if (i - 1 < 0 || j - 1 < 0 || i + 1 > 9 || j + 1 > 9) {
-					box[i][j] = true;
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				if (rowIndex - 1 < 0 || columnIndex - 1 < 0 || rowIndex + 1 > 9 || columnIndex + 1 > 9) {
+					box[rowIndex][columnIndex] = new Cell(true, rowIndex, columnIndex);
+				} else {
+					box[rowIndex][columnIndex] = new Cell(false, rowIndex, columnIndex);
 				}
 			}
 		}
 		return box;
 	}
 
-	private static boolean[][] createCrossPattern() {
-		boolean[][] cross = createBoxPattern();
+	private static Cell[][] createCrossPattern() {
+		Cell[][] cross = new Cell[MATRIX_LENGTH][MATRIX_LENGTH];
 
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < matrixLength; j++) {
-				if (i == j || (i + j) == 9) {
-					cross[i][j] = true;
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				if (rowIndex == columnIndex || (rowIndex + columnIndex) == 9) {
+					cross[rowIndex][columnIndex] = new Cell(true, rowIndex, columnIndex);
+				} else {
+					cross[rowIndex][columnIndex] = new Cell(false, rowIndex, columnIndex);
 				}
 			}
 		}
 		return cross;
 	}
 
-	private static boolean[][] createStarPattern() {
-		// TODO Auto-generated method stub
-		return null;
+	private static Cell[][] createCrossInABoxPattern() {
+		Cell[][] crossInABoxPattern = new Cell[MATRIX_LENGTH][MATRIX_LENGTH];
+
+		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
+				if (rowIndex == columnIndex || (rowIndex + columnIndex) == 9
+						|| (rowIndex - 1 < 0 || columnIndex - 1 < 0 || rowIndex + 1 > 9 || columnIndex + 1 > 9)) {
+					crossInABoxPattern[rowIndex][columnIndex] = new Cell(true, rowIndex, columnIndex);
+				}
+			}
+		}
+		return crossInABoxPattern;
 	}
 
-	public static boolean[][] getLifePattern(String lifePatternName) {
+	public static Cell[][] getMatrix(String lifePatternName) {
 		switch (lifePatternName) {
-		case star:
-			return createStarPattern();
-		case box:
+		case CROSS_IN_A_BOX:
+			return createCrossInABoxPattern();
+		case BOX:
 			return createBoxPattern();
-		case cross:
+		case CROSS:
 			return createCrossPattern();
-		case allFilled:
+		case ALL_FILLED:
 		default:
 			return createAllFilledPattern();
 		}

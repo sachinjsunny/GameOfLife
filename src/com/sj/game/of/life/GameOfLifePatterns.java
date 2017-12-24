@@ -1,87 +1,60 @@
 package com.sj.game.of.life;
 
-import static com.sj.game.of.life.factory.InitialLifePattern.getLifePattern;
-import static constants.LifeConstants.*;
-import static constants.LifeConstants.matrixLength;
+import static com.sj.game.of.life.factory.InitialLifePattern.getMatrix;
+import static constants.LifeConstants.CROSS;
+import static constants.LifeConstants.MATRIX_LENGTH;
 
 import org.apache.log4j.Logger;
 
+import com.sj.game.of.life.pojo.Cell;
+
+/**
+ * @author sachinjsunny
+ *
+ */
 public class GameOfLifePatterns {
-	
+
 	private static Logger log = Logger.getLogger(GameOfLifePatterns.class);
 
-	private static boolean[][] lifePattern;
+	private static Cell[][] theMatrix;
 
-	private static boolean[][] oldPattern;
+	private static Cell[][] theMatrixReturns;
 
 	public static void main(String[] args) {
-		lifePattern = getLifePattern(cross);
-		oldPattern = getLifePattern(cross);
+		theMatrix = getMatrix(CROSS);
+		theMatrixReturns = getMatrix(CROSS);
 		for (int i = 0; i < 10; i++) {
 			printLifeArray();
 			runGameOfLifeRules();
-			log.info("========================\n");
+			log.info("============================================================\n");
 			replaceOldPattern();
 		}
 	}
 
 	private static void replaceOldPattern() {
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < matrixLength; j++) {
-				oldPattern[i][j] = lifePattern[i][j];
+		for (int i = 0; i < MATRIX_LENGTH; i++) {
+			for (int j = 0; j < MATRIX_LENGTH; j++) {
+				theMatrixReturns[i][j] = theMatrix[i][j];
 			}
 		}
 	}
 
 	private static void runGameOfLifeRules() {
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < matrixLength; j++) {
-				lifePattern[i][j] = isCellAlive(i, j);
+		for (int i = 0; i < MATRIX_LENGTH; i++) {
+			for (int j = 0; j < MATRIX_LENGTH; j++) {
+				Cell currentCell = theMatrix[i][j];
+				currentCell.setAlive(currentCell.willIContinueToLive(theMatrix));
 			}
 		}
-	}
-
-	private static boolean isCellAlive(int i, int j) {
-		int numberOfAliveCellsAroundMe = getAliveCellsAroundMe(i, j);
-		if(numberOfAliveCellsAroundMe>8){
-			log.info(i + ","+ j);
-		}
-		if (lifePattern[i][j]
-				&& (numberOfAliveCellsAroundMe == 2 || numberOfAliveCellsAroundMe == 3)) {
-			return true;
-		} else if (lifePattern[i][j]
-				&& (numberOfAliveCellsAroundMe < 2 || numberOfAliveCellsAroundMe > 3)) {
-			return false;
-		} else if (!lifePattern[i][j] && numberOfAliveCellsAroundMe == 3) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	private static int getAliveCellsAroundMe(int i, int j) {
-		int numberOfAliveCellsAroundMe = 0;
-
-		for (int row = i - 1; row <= i + 1; row++) {
-			for (int column = j - 1; column <= j + 1; column++) {
-				if (row >= 0 && column >= 0 && row < matrixLength
-						&& column < matrixLength && lifePattern[row][column]
-						&& !(row == i && column == j)) {
-					numberOfAliveCellsAroundMe++;
-				}
-			}
-		}
-
-		return numberOfAliveCellsAroundMe;
 	}
 
 	private static void printLifeArray() {
-		for (int i = 0; i < matrixLength; i++) {
-			for (int j = 0; j < lifePattern[i].length; j++) {
+		for (int i = 0; i < MATRIX_LENGTH; i++) {
+			for (int j = 0; j < theMatrix[i].length; j++) {
 				if (j > 0) {
 					log.info(",");
 				}
-				log.info(lifePattern[i][j]);
+				log.info(theMatrix[i][j].isAlive());
 			}
 			log.info("\n");
 		}
