@@ -1,10 +1,10 @@
 package com.sj.game.of.life.factory;
 
-import static constants.LifeConstants.ALL_FILLED;
-import static constants.LifeConstants.BOX;
-import static constants.LifeConstants.CROSS;
-import static constants.LifeConstants.MATRIX_LENGTH;
-import static constants.LifeConstants.CROSS_IN_A_BOX;
+import static com.sj.game.of.life.constants.LifeConstants.ALL_FILLED;
+import static com.sj.game.of.life.constants.LifeConstants.BOX;
+import static com.sj.game.of.life.constants.LifeConstants.CROSS;
+import static com.sj.game.of.life.constants.LifeConstants.CROSS_IN_A_BOX;
+import static com.sj.game.of.life.constants.LifeConstants.MATRIX_LENGTH;
 
 import com.sj.game.of.life.pojo.Cell;
 
@@ -12,7 +12,7 @@ import com.sj.game.of.life.pojo.Cell;
  * @author sachinjsunny
  *
  */
-public class InitialLifePattern {
+public final class InitialLifePattern {
 
 	private InitialLifePattern() {
 

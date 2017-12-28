@@ -3,7 +3,7 @@
  */
 package com.sj.game.of.life.pojo;
 
-import static constants.LifeConstants.MATRIX_LENGTH;
+import static com.sj.game.of.life.constants.LifeConstants.MATRIX_LENGTH;
 
 import org.apache.log4j.Logger;
 

@@ -1,6 +1,10 @@
 package com.sj.game.of.life.constants;
 
-public class LifeConstants {
+/**
+ * @author sachinjsunny
+ *
+ */
+public final class LifeConstants {
 	public static final String BOX = "BOX";
 
 	public static final String ALL_FILLED = "ALL";

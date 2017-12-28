@@ -1,8 +1,8 @@
 package com.sj.game.of.life;
 
+import static com.sj.game.of.life.constants.LifeConstants.CROSS_IN_A_BOX;
+import static com.sj.game.of.life.constants.LifeConstants.MATRIX_LENGTH;
 import static com.sj.game.of.life.factory.InitialLifePattern.getMatrix;
-import static constants.LifeConstants.CROSS_IN_A_BOX;
-import static constants.LifeConstants.MATRIX_LENGTH;
 
 import org.apache.log4j.Logger;
 
