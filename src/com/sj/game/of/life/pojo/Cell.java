@@ -84,7 +84,7 @@ public class Cell {
 		for (int row = rowIndex - 1; row <= rowIndex + 1; row++) {
 			for (int column = columnIndex - 1; column <= columnIndex + 1; column++) {
 				if (row >= 0 && column >= 0 && row < MATRIX_LENGTH && column < MATRIX_LENGTH
-						&& theMatrix[row][column].isAlive() && !(row == rowIndex && column == columnIndex)) {
+						&& theMatrix[row][column].alive && !(row == rowIndex && column == columnIndex)) {
 					numberOfAliveCellsAroundMe++;
 				}
 			}
@@ -98,12 +98,11 @@ public class Cell {
 		if (numberOfAliveCellsAroundMe > 8) {
 			log.debug(this.getRowIndex() + "," + this.getColumnIndex());
 		}
-		if (this.isAlive() && (numberOfAliveCellsAroundMe == 2 || numberOfAliveCellsAroundMe == 3)) {
+		if ((this.alive && (numberOfAliveCellsAroundMe == 2 || numberOfAliveCellsAroundMe == 3))
+				|| (!this.alive && numberOfAliveCellsAroundMe == 3)) {
 			this.alive = true;
-		} else if (this.isAlive() && (numberOfAliveCellsAroundMe < 2 || numberOfAliveCellsAroundMe > 3)) {
+		} else if (this.alive && (numberOfAliveCellsAroundMe < 2 || numberOfAliveCellsAroundMe > 3)) {
 			this.alive = false;
-		} else {
-			this.alive = !this.isAlive() && numberOfAliveCellsAroundMe == 3;
 		}
 	}
 }
