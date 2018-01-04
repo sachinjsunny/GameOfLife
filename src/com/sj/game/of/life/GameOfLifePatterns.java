@@ -17,9 +17,12 @@ public class GameOfLifePatterns {
 	private static Logger log = Logger.getLogger(GameOfLifePatterns.class);
 
 	private static Cell[][] theMatrix;
+	
+	private static Cell[][] oldMatrix;
 
 	public static void main(String[] args) {
 		theMatrix = getMatrix(CROSS_IN_A_BOX);
+		populateOldMatrix();
 		for (int i = 0; i < MATRIX_LENGTH; i++) {
 			printTheMatrix();
 			runGameOfLifeRules();
@@ -30,7 +33,7 @@ public class GameOfLifePatterns {
 	private static void runGameOfLifeRules() {
 		for (int rowIndex = 0; rowIndex < MATRIX_LENGTH; rowIndex++) {
 			for (int columnIndex = 0; columnIndex < MATRIX_LENGTH; columnIndex++) {
-				theMatrix[rowIndex][columnIndex].willIContinueToLiveInTheMatrix(theMatrix);
+				theMatrix[rowIndex][columnIndex].willIContinueToLiveInTheMatrix(oldMatrix);
 			}
 		}
 	}
@@ -44,6 +47,17 @@ public class GameOfLifePatterns {
 				log.info(theMatrix[rowIndex][columnIndex].isAlive());
 			}
 			log.info("\n");
+		}
+	}
+	
+	private static void populateOldMatrix() {
+		if (oldMatrix == null) {
+			oldMatrix = new Cell[theMatrix.length][theMatrix.length];
+		}
+		for (int rowIndex = 0; rowIndex < theMatrix.length; rowIndex++) {
+			for (int columnIndex = 0; columnIndex < theMatrix.length; columnIndex++) {
+				oldMatrix[rowIndex][columnIndex] = new Cell(theMatrix[rowIndex][columnIndex]);
+			}
 		}
 	}
 }
